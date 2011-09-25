@@ -1,0 +1,1 @@
+<%=mastermountpath%> <%=autofsfilepath%>  --timeout=<%=timeout%>
