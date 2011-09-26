@@ -1,3 +1,24 @@
 NFS
 
 This is the NFS module.
+
+node 'puppet' {
+        include nfs::server
+                nfs::server::config {'testentry':
+                        exportpath    => '/tmp',
+                        ipallowed     => '192.0.0.0/255.255.255.0',
+                        perms         => 'rw,sync,no_root_squash,insecure'
+                }
+
+        include nfs::client
+                nfs::client::config {'magictmp':
+                        mastermountpath   =>"/-",
+                        autofilename      => 'magic',
+                        t                 => '60',
+                        autofsfilepath    => 'auto.magic',
+                        randommountpath   => 'tmp',
+                        perms             =>'/magic -rw,soft,rsize=8192,wsize=8192',
+                        nfsserverhostname => '192.168.159.128',
+                }
+
+}
