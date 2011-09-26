@@ -15,10 +15,13 @@ define nfs::server::config(
         $perms
 ){ 
 
-         file {"/etc/exports":
+
+         file {"${nfs::params::nfs_server_build_dir}/${name}":
                 content => template('nfs/exports.erb'),
                 ensure  => present,
                 require => Class["nfs::server::install"],
+		notify   => [Exec['rebuild-exports'],Service["nfs"]],
+                before   => Exec['rebuild-exports'],	
         }
 }
 ################################################################################
