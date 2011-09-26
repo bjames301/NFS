@@ -9,13 +9,19 @@
 
 
 define nfs::client::config(
- 	$autofsfilepath,
-	$t,
-	$mastermountpath,
-	$autofilename,
-	$randommountpath,
+
+ #Varibles defined the the file auto.master.
+	
+	$am_mountpath,
+	$amfs_filepath,
+	$time_out,
+	
+#Varibles define in the file auto.x file which specifies the mount point.
+	
 	$perms,
-	$nfsserverhostname	
+	$nfss_erverhostname,
+	$autofilename,
+	$nfss_mountpath
 ){ 
  
 	file {"/etc/auto.${autofilename}":
