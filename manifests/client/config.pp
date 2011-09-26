@@ -30,7 +30,7 @@ define nfs::client::config(
 	file { "${nfs::params::nfs_build_dir}/${name}":
 		ensure   => present,
 		content  => template('nfs/auto.master.erb'),
-		notify   => [Exec['rebuild-auto.master'],Service["nfs::client::service"]],
+		notify   => [Exec['rebuild-auto.master'],Service["autofs"]],
 		before   => Exec['rebuild-auto.master'],
 	}
 
