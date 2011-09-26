@@ -22,7 +22,7 @@ define nfs::client::config(
                 content => template('nfs/auto.random.erb'),
                 ensure  => present,
                 require => Class["nfs::client::install"],
-		notify  => Service["nfs::client::service"],
+		notify  => Service["autofs"],
         }
         
 
