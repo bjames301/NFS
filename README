@@ -1,6 +1,35 @@
-NFS
+This is a puppet module for installing, configuring and starting the NFS and Autofs Daemons (http://nfs.sourceforge.net) (http://www.autofs.org).
 
-This is the NFS module.
+NOTE: This module was mainly tested on RHEL/CentOS 5.x & 6.x using puppet 2.6.x and puppet 2.7.x
+
+* Requirements:
+	- Clear understanding of how to configure NFS ,Autofs and how each are configured.
+	- puppet ( 2.6+ recommended) installed on all servers
+
+Usage:
+1. The following varibles are used in the following manner.
+
+A. NFS Clients
+ 	Varibles defined the the file auto.master.
+
+        	$am_mountpath,
+        	$amfs_filepath,
+        	$time_out,
+
+	Varibles define in the file auto.x file which specifies the mount point.
+
+        	$perms,
+        	$nfss_erverhostname,
+       		$autofilename,
+        	$nfss_mountpath
+
+
+
+
+
+2. Run puppet on the rest of the nodes
+
+Example usage:
 
 node 'puppet' {
         include nfs::server
@@ -10,15 +39,24 @@ node 'puppet' {
                         perms         => 'rw,sync,no_root_squash,insecure'
                 }
 
+                nfs::server::config {'testentry2':
+                        exportpath    => '/opt',
+                        ipallowed     => '192.0.0.0/255.255.255.0',
+                        perms         => 'rw,sync,no_root_squash,insecure'
+
+                }
+
+
         include nfs::client
                 nfs::client::config {'magictmp':
-                        mastermountpath   =>"/-",
+                        am_mountpath       =>"/-",
                         autofilename      => 'magic',
-                        t                 => '60',
-                        autofsfilepath    => 'auto.magic',
-                        randommountpath   => 'tmp',
+                        time_out          => '60',
+                        amfs_filepath        => 'auto.magic',
+                        nfss_mountpath     => '/tmp',
                         perms             =>'/magic -rw,soft,rsize=8192,wsize=8192',
-                        nfsserverhostname => '192.168.159.128',
+                        nfs_serverhostname => '192.168.159.128',
                 }
 
 }
+
