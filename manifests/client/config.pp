@@ -19,7 +19,7 @@ define nfs::client::config(
 #Varibles define in the file auto.x file which specifies the mount point.
 	
 	$perms,
-	$nfss_erverhostname,
+	$nfs_serverhostname,
 	$autofilename,
 	$nfss_mountpath
 ){ 
