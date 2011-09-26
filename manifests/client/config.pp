@@ -22,6 +22,7 @@ define nfs::client::config(
                 content => template('nfs/auto.random.erb'),
                 ensure  => present,
                 require => Class["nfs::client::install"],
+		notify  => Service["nfs::client::service"],
         }
         
 
@@ -29,7 +30,7 @@ define nfs::client::config(
 	file { "${nfs::params::nfs_build_dir}/${name}":
 		ensure   => present,
 		content  => template('nfs/auto.master.erb'),
-		notify   => Exec['rebuild-auto.master'],
+		notify   => [Exec['rebuild-auto.master'],Service["nfs::client::service"]],
 		before   => Exec['rebuild-auto.master'],
 	}
 
